@@ -40,12 +40,13 @@ def update_price_per_neigh(n_neigh):
     n_neigh = int(n_neigh)
     
     # Filtering dataset
-    neigh_list = airbnb.groupby('neighborhood').agg({'overall_satisfaction': 'count'})\
+    neigh_list = airbnb.groupby('neighborhood').agg({'overall_satisfaction': 'mean'})\
                         .sort_values('overall_satisfaction', ascending = False)[:n_neigh].index
     airbnb_cut = airbnb[airbnb['neighborhood'].isin(neigh_list)]
 
     # Building figure
-    ppn_fig = px.box(airbnb_cut, x="neighborhood", y="price")
+    # ppn_fig = px.box(airbnb_cut, x="neighborhood", y="price")
+    ppn_fig = px.histogram(airbnb_cut, x="price")
 
     return ppn_fig
 
